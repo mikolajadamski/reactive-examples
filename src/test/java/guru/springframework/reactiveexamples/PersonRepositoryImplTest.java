@@ -1,5 +1,7 @@
 package guru.springframework.reactiveexamples;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import guru.springframework.reactiveexamples.domain.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -120,36 +122,22 @@ class PersonRepositoryImplTest {
             System.out.println(person.toString());
         });
     }
+
+    @Test
+    void shouldFindPersonById() {
+        // when
+        Mono<Person> result = personRepository.getById(1);
+
+        // then
+        assertThat(result.block()).isNotNull();
+    }
+
+    @Test
+    void shouldReturnEmptyMono() {
+        // when
+        Mono<Person> result = personRepository.getById(1);
+
+        // then
+        assertThat(result.block()).isNull();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
